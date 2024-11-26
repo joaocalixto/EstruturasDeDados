@@ -11,34 +11,31 @@ public class ListaDuplamenteLigada {
             this.data = data;
             this.next = null;
             this.prev = null;
-
         }
     }
 
     private Node head;
 
-    public void inserirInicio(int data){
-
+    public void inserirInicio(int data) {
         Node novoElemento = new Node(data);
 
         // Se a lista for vazia
-        if(head == null){
+        if (head == null) {
             head = novoElemento;
             return;
-        }else{
+        } else {
             head.prev = novoElemento;
             novoElemento.next = head;
         }
 
         head = novoElemento;
-
     }
 
-    public Node buscar(int data){
+    public Node buscar(int data) {
         Node atual = head;
         Node encontrado = null;
-        while (atual != null){
-            if(atual.data == data){
+        while (atual != null) {
+            if (atual.data == data) {
                 encontrado = atual;
                 return encontrado;
             }
@@ -47,66 +44,87 @@ public class ListaDuplamenteLigada {
         return encontrado;
     }
 
-    public void inserirFim(int data){
-
-        // a lista estiver vazia
+    public void inserirFim(int data) {
         Node novoElemento = new Node(data);
-        if(head == null){
+
+        // Se a lista estiver vazia
+        if (head == null) {
             head = novoElemento;
             return;
         }
         Node atual = head;
-        while (atual.next != null){
+        while (atual.next != null) {
             atual = atual.next;
         }
         atual.next = novoElemento;
         novoElemento.prev = atual;
-
     }
 
-    public void imprimir(){
+    public void imprimir() {
         Node atual = head;
 
-        while (atual != null){
-            System.out.println(atual.data + "->" + atual.next);
+        while (atual != null) {
+            System.out.println(atual.data);
             atual = atual.next;
         }
     }
-    public void remover(int data){
+
+    public void remover(int data) {
         Node atual = head;
 
-        while (atual != null){
-            if(atual.data == data){
-                if(atual.next != null){
+        while (atual != null) {
+            if (atual.data == data) {
+                if (atual.next != null) {
                     atual.next.prev = atual.prev;
                 }
-                if(atual.prev != null){
+                if (atual.prev != null) {
                     atual.prev.next = atual.next;
+                } else {
+                    head = atual.next; // Atualiza a cabeça se for o primeiro nó
                 }
+                return; // Elemento encontrado e removido, sair do método
             }
-
             atual = atual.next;
         }
-
     }
 
+    public void sort() {
+        if (head == null) return; // Lista vazia, nada para ordenar
+
+        boolean trocado;
+        Node atual;
+
+        do {
+            trocado = false;
+            atual = head;
+
+            while (atual.next != null) {
+                if (atual.data > atual.next.data) {
+                    // Trocar os valores
+                    int temp = atual.data;
+                    atual.data = atual.next.data;
+                    atual.next.data = temp;
+                    trocado = true;
+                }
+                atual = atual.next;
+            }
+        } while (trocado); // Repete até não haver trocas
+    }
 
     public static void main(String[] args) {
-
         ListaDuplamenteLigada listaDuplamenteLigada = new ListaDuplamenteLigada();
+
         listaDuplamenteLigada.inserirFim(10);
         listaDuplamenteLigada.inserirFim(20);
-
         listaDuplamenteLigada.inserirInicio(2);
+        listaDuplamenteLigada.inserirFim(5);
 
-        listaDuplamenteLigada.remover(10);
+        System.out.println("Lista antes da ordenação:");
+        listaDuplamenteLigada.imprimir();
 
-        Node buscar = listaDuplamenteLigada.buscar(20);
+        listaDuplamenteLigada.sort();
 
-        System.out.println("No encontrado "+ buscar.data);
-
+        System.out.println("\nLista após a ordenação:");
         listaDuplamenteLigada.imprimir();
     }
-
-
 }

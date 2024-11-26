@@ -21,21 +21,21 @@ public class ListaLigada {
         }
     }
 
-    public void adicionar(String data, int posicao){
+    public void adicionar(String data, int posicao) {
         Node novoElemento = new Node(data);
 
-        // Cado o adicionar for na cabeca
-        if(posicao == 0){
+        // Caso o adicionar for na cabeça
+        if (posicao == 0) {
             novoElemento.next = cabeca;
             cabeca = novoElemento;
             return;
         }
 
-        // Se a posicao for no meio ou no fim
+        // Se a posição for no meio ou no fim
         Node atual = cabeca;
         int contador = 0;
 
-        while (contador< posicao -1 && atual != null){
+        while (contador < posicao - 1 && atual != null) {
             atual = atual.next;
             contador++;
         }
@@ -44,17 +44,38 @@ public class ListaLigada {
         atual.next = novoElemento;
     }
 
-
     public void imprimir() {
-        // se o head for null a lista esta vazio
-
+        // se a cabeça for null, a lista está vazia
         Node atual = this.cabeca;
 
         while (atual != null) {
             System.out.println(atual.data);
             atual = atual.next;
         }
+    }
 
+    public void sort() {
+        if (cabeca == null) return; // Lista vazia, nada a ordenar
+
+        boolean trocado;
+        do {
+            Node atual = cabeca;
+            Node proximo = cabeca.next;
+            trocado = false;
+
+            while (proximo != null) {
+                // Comparar valores
+                if (atual.data.compareTo(proximo.data) > 0) {
+                    // Trocar os valores dos nós
+                    String temp = atual.data;
+                    atual.data = proximo.data;
+                    proximo.data = temp;
+                    trocado = true;
+                }
+                atual = proximo;
+                proximo = proximo.next;
+            }
+        } while (trocado); // Repetir até não haver trocas
     }
 
     class Node {
@@ -72,12 +93,14 @@ public class ListaLigada {
 
         listaLigada.adicionar("joao");
         listaLigada.adicionar("matheus");
-
         listaLigada.adicionar("jose", 1);
+
+        System.out.println("Lista antes da ordenação:");
         listaLigada.imprimir();
 
+        listaLigada.sort();
+
+        System.out.println("\nLista após a ordenação:");
+        listaLigada.imprimir();
     }
-
-
-
 }
