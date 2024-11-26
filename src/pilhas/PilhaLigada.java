@@ -14,8 +14,10 @@ public class PilhaLigada {
 
     }
 
-    void pop(){
+    int pop(){
+      int data = topo.data;
       topo = topo.next;
+      return data;
     }
     void imprimir(){
         Node atual = topo;
@@ -23,6 +25,10 @@ public class PilhaLigada {
             System.out.println(atual.data);
             atual = atual.next;
         }
+    }
+
+    int peek(){
+        return topo.data;
     }
 
     class Node {
@@ -42,6 +48,7 @@ public class PilhaLigada {
         pilha.push(15);
 
         pilha.pop();
+        System.out.println("Peek = "+ pilha.peek());
 
         pilha.imprimir();
     }

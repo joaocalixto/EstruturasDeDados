@@ -20,13 +20,16 @@ public class PilhaArray {
         pilha[++topo] = data;
     }
 
-    void pop(){
+    int pop(){
         // verificar se a lista esta cheia
         if(isEmpty()){
             throw new RuntimeException("A lista esta vazia");
         }
-        pilha[topo] = 0;
-        topo--;
+        return pilha[topo--];
+    }
+
+    int peek(){
+        return pilha[topo];
     }
 
     void imprimir(){
@@ -48,6 +51,8 @@ public class PilhaArray {
         pilhaArray.push(10);
         pilhaArray.push(5);
         pilhaArray.push(15);
+
+        System.out.println("Peek = "+ pilhaArray.peek());
 
         pilhaArray.imprimir();
     }
