@@ -1,4 +1,4 @@
-package filas;
+package filas.circulares;
 
 class QueueArray {
     private int[] queueArray;
